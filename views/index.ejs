@@ -1,0 +1,183 @@
+<!-- HERO (imagem definida direto no HTML) -->
+<section
+  class="hero"
+  style="
+    position:relative;
+    min-height:520px;
+    display:flex;align-items:center;justify-content:center;
+    background:url('/public/css/martelo.jpg') center/cover no-repeat;
+    color:#fff; text-align:center; overflow:hidden;
+  "
+>
+  <!-- overlay para deixar o texto legível -->
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:1"></div>
+
+  <div class="inner"
+       style="position:relative;z-index:2;max-width:900px;padding:40px 20px;">
+    <h1 style="font-size:2.4rem;margin:0 0 12px 0;font-weight:700;">
+      Wellington N. Pereira — Corretor de Imóveis
+    </h1>
+    <p style="font-size:1.1rem;margin:0 0 24px 0;line-height:1.5;">
+      <strong>Trabalho com assessoria de leilão Caixa Econômica Federal</strong><br>
+      Experiência em intermediação, compra, venda e locação de imóveis.
+    </p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+      <a class="btn light" href="https://wa.me/5518982069977" target="_blank" rel="noopener">
+        💬 Falar no WhatsApp
+      </a>
+      <a class="btn" href="#listagem" style="background:#0B2B6F;">🏠 Ver imóveis</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (JS / animado) -->
+<section class="container faq js-accordion" id="faq">
+  <h2 class="faq-title">Perguntas frequentes</h2>
+
+  <div class="faq-item">
+    <button class="faq-q" aria-expanded="false" aria-controls="faq1" id="q1">
+      É seguro comprar pelo leilão da Caixa?
+    </button>
+    <div class="faq-a" id="faq1" role="region" aria-labelledby="q1" hidden>
+      Sim, quando você segue o <strong>edital</strong> e as regras do leilão. A Caixa tem processos formais
+      e a escritura é lavrada após a quitação. Com assessoria, o risco cai bastante.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" aria-expanded="false" aria-controls="faq2" id="q2">
+      Quais são os principais riscos?
+    </button>
+    <div class="faq-a" id="faq2" role="region" aria-labelledby="q2" hidden>
+      Possível <strong>imóvel ocupado</strong>, débitos de condomínio/IPTU e restrições para vistoria interna.
+      Tudo é mapeado antes do lance na nossa assessoria.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" aria-expanded="false" aria-controls="faq3" id="q3">
+      Posso visitar o imóvel antes?
+    </button>
+    <div class="faq-a" id="faq3" role="region" aria-labelledby="q3" hidden>
+      Em regra não há visita interna. Usamos matrícula, fotos e diligências de vizinhança.
+      Quando desocupado, às vezes é possível ver externamente.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" aria-expanded="false" aria-controls="faq4" id="q4">
+      Como funciona o pagamento do lance vencedor?
+    </button>
+    <div class="faq-a" id="faq4" role="region" aria-labelledby="q4" hidden>
+      Após o arremate, paga-se o sinal e custos do edital. O saldo pode ser à vista ou financiado,
+      conforme a modalidade do leilão.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" aria-expanded="false" aria-controls="faq5" id="q5">
+      Dá para financiar imóvel de leilão?
+    </button>
+    <div class="faq-a" id="faq5" role="region" aria-labelledby="q5" hidden>
+      Em alguns editais, sim. Depende do imóvel e da modalidade. Avaliamos a viabilidade e orientamos
+      toda a documentação.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" aria-expanded="false" aria-controls="faq6" id="q6">
+      Vocês fazem toda a assessoria?
+    </button>
+    <div class="faq-a" id="faq6" role="region" aria-labelledby="q6" hidden>
+      Sim. <strong>Trabalho com assessoria de leilão Caixa Econômica Federal</strong>:
+      análise do edital, diligências, estratégia de lance, acompanhamento e pós-arremate.
+      <br><br>
+      <a class="btn" href="https://wa.me/5518982069977" target="_blank" rel="noopener">📞 Falar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- LISTAGEM -->
+<section id="listagem" class="container">
+  <% if (!properties.length) { %>
+    <p>Nenhum imóvel cadastrado ainda.</p>
+  <% } else { %>
+    <div class="grid">
+      <% properties.forEach(p => { %>
+        <div class="card">
+          <% if (p.images && p.images.length) { %>
+            <img class="thumb-zoom" src="<%= p.images[0] %>" alt="Imagem do imóvel">
+          <% } %>
+          <h3><%= p.title %></h3>
+          <% if (p.price) { %><p><strong>Preço:</strong> <%= p.price %></p><% } %>
+          <% if (p.address) { %><p><strong>Local:</strong> <%= p.address %></p><% } %>
+          <a class="btn" href="/imovel/<%= p.id %>">Ver detalhes</a>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<!-- Script do FAQ -->
+<script>
+(function() {
+  const items = document.querySelectorAll('.js-accordion .faq-item');
+  const prefersNoMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function closeAll(except) {
+    items.forEach(item => {
+      if (item === except) return;
+      const btn = item.querySelector('.faq-q');
+      const panel = item.querySelector('.faq-a');
+      btn.setAttribute('aria-expanded', 'false');
+      slideUp(panel);
+    });
+  }
+
+  function slideDown(el) {
+    el.hidden = false;
+    el.style.overflow = 'hidden';
+    if (prefersNoMotion) { el.style.maxHeight = 'none'; return; }
+    el.style.maxHeight = '0px';
+    requestAnimationFrame(() => {
+      el.style.transition = 'max-height 250ms ease';
+      el.style.maxHeight = el.scrollHeight + 'px';
+    });
+    el.addEventListener('transitionend', function done() {
+      el.style.maxHeight = 'none'; el.style.transition = ''; el.removeEventListener('transitionend', done);
+    });
+  }
+
+  function slideUp(el) {
+    if (el.hidden) return;
+    if (prefersNoMotion) { el.hidden = true; return; }
+    el.style.overflow = 'hidden';
+    el.style.maxHeight = el.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      el.style.transition = 'max-height 200ms ease';
+      el.style.maxHeight = '0px';
+    });
+    el.addEventListener('transitionend', function done() {
+      el.hidden = true; el.style.transition = ''; el.removeEventListener('transitionend', done);
+    });
+  }
+
+  items.forEach(item => {
+    const btn = item.querySelector('.faq-q');
+    const panel = item.querySelector('.faq-a');
+
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        btn.setAttribute('aria-expanded', 'false');
+        slideUp(panel);
+      } else {
+        btn.setAttribute('aria-expanded', 'true');
+        slideDown(panel);
+        closeAll(item);
+      }
+    });
+  });
+})();
+</script>
+

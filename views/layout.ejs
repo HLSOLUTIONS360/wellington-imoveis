@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title><%= SITE_NOME %></title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><%= SITE_NOME %></div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span class="badge">CRECI 282327-F</span>
+        <a class="btn" href="/">Início</a>
+        <% if (sessao && sessao.isAuth) { %>
+          <a class="btn light" href="/admin">Admin</a>
+          <a class="btn" href="/admin/logout">Sair</a>
+        <% } else { %>
+          <a class="btn light" href="/admin/login">Área do Corretor</a>
+        <% } %>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <%- body %>
+  </main>
+
+  <footer>
+    © <%= new Date().getFullYear() %> — <%= SITE_NOME %>
+  </footer>
+</body>
+</html>

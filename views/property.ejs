@@ -1,0 +1,86 @@
+<h2><%= property.title %></h2>
+<p><strong>Preço:</strong> <%= property.price || "—" %></p>
+<p><strong>Endereço:</strong> <%= property.address || "—" %></p>
+<p><%= property.description || "" %></p>
+
+<!-- Galeria de mídia (fotos e vídeos) -->
+<div class="gallery" id="gallery">
+  <% (property.images || []).forEach((src, idx) => { 
+       const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
+  %>
+    <div class="tile" data-type="<%= isVideo ? 'video' : 'image' %>" data-src="<%= src %>" aria-label="Abrir mídia" role="button" tabindex="0">
+      <% if (isVideo) { %>
+        <video src="<%= src %>" muted></video>
+        <span class="play-badge">▶ vídeo</span>
+      <% } else { %>
+        <img src="<%= src %>" alt="Foto do imóvel <%= idx+1 %>">
+      <% } %>
+    </div>
+  <% }) %>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lightbox-content">
+    <button class="close-btn" id="lbClose" aria-label="Fechar">✕</button>
+    <!-- Conteúdo é injetado via JS (img ou video) -->
+  </div>
+</div>
+
+<script>
+(function(){
+  const gallery = document.getElementById('gallery');
+  const lb = document.getElementById('lightbox');
+  const lbContent = lb.querySelector('.lightbox-content');
+  const lbClose = document.getElementById('lbClose');
+
+  function openLightbox(src, type){
+    // limpa conteúdo anterior
+    lbContent.querySelectorAll('img,video').forEach(el => el.remove());
+
+    let el;
+    if(type === 'video'){
+      el = document.createElement('video');
+      el.src = src;
+      el.controls = true;
+      el.autoplay = true;
+    } else {
+      el = document.createElement('img');
+      el.src = src;
+      el.alt = 'Mídia do imóvel';
+    }
+    lbContent.appendChild(el);
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(){
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    // pausa vídeo se existir
+    const v = lbContent.querySelector('video');
+    if(v){ v.pause(); }
+  }
+
+  // abre ao clicar/teclar
+  gallery?.addEventListener('click', (e)=>{
+    const tile = e.target.closest('.tile');
+    if(!tile) return;
+    openLightbox(tile.dataset.src, tile.dataset.type);
+  });
+  gallery?.addEventListener('keydown', (e)=>{
+    if((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('tile')){
+      e.preventDefault();
+      const t = e.target;
+      openLightbox(t.dataset.src, t.dataset.type);
+    }
+  });
+
+  // fechar: X, fora, Esc
+  lbClose.addEventListener('click', closeLightbox);
+  lb.addEventListener('click', (e)=>{ if(e.target === lb) closeLightbox(); });
+  window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && lb.classList.contains('open')) closeLightbox(); });
+})();
+</script>

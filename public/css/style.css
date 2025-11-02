@@ -1,0 +1,236 @@
+:root{
+  --bg:#ffffff;
+  --ink:#111216;
+  --primary:#0B2B6F;   /* azul do WP */
+  --accent:#E53935;    /* vermelho VENDE-SE */
+  --muted:#f2f4f7;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Poppins,system-ui,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:18px}
+
+/* header */
+header{
+  background:linear-gradient(90deg,var(--primary),#183b9b);
+  color:#fff;
+}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:800;letter-spacing:.2px}
+.badge{
+  background:var(--accent);
+  color:#fff;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:.8rem;
+  font-weight:700;
+}
+
+/* botões */
+.btn, input[type=submit].btn, button.btn{
+  display:inline-block;
+  padding:10px 16px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+  background:var(--primary);
+  color:#fff;
+}
+.btn.light{background:var(--accent)}
+.btn.ghost{background:transparent;border:2px solid #fff;color:#fff}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:340px;
+  color:#fff;
+  display:flex;
+  align-items:center;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url("martelo.jpg") center/cover no-repeat;
+  filter:brightness(.55);
+}
+.hero .inner{
+  position:relative;
+  z-index:1;
+  padding:40px 0;
+}
+.hero h1{margin:0 0 8px 0;font-size:2rem}
+.hero p{margin:0 0 16px 0;max-width:780px;line-height:1.5}
+
+/* cards/lista */
+.grid{
+  display:grid;
+  gap:18px;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+}
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
+  border:1px solid #e9edf2;
+}
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:10px;
+}
+.card h3{margin:10px 0}
+
+/* formulários */
+label{display:block;margin-top:12px;font-weight:600}
+input[type=text], textarea{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #d0d6e0;
+  background:#fff;
+}
+.images-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.images-list img{
+  width:120px;
+  height:90px;
+  object-fit:cover;
+  border-radius:8px;
+  border:1px solid #d0d6e0;
+}
+
+/* footer */
+footer{
+  text-align:center;
+  padding:22px;
+  color:#69707d;
+  background:var(--muted);
+  margin-top:28px;
+}
+
+/* ===== FAQ (JS animado) ===== */
+.faq {
+  background: #f7f9fc;
+  border: 1px solid #e6ebf2;
+  border-radius: 14px;
+  padding: 18px;
+  margin-top: 22px;
+}
+
+.faq-title {
+  color: var(--primary);
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.faq-item {
+  background: #fff;
+  border: 1px solid #e6ebf2;
+  border-radius: 12px;
+  margin: 10px 0;
+  overflow: hidden;
+  transition: box-shadow .2s;
+}
+.faq-item:hover { box-shadow: 0 3px 12px rgba(0,0,0,.06); }
+
+.faq-q {
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 0;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+}
+.faq-q::after {
+  content: "＋";
+  font-weight: 900;
+  margin-left: 12px;
+  color: var(--primary);
+  transition: transform .2s ease;
+}
+.faq-q[aria-expanded="true"]::after {
+  content: "–";
+  transform: rotate(180deg);
+}
+
+.faq-a {
+  padding: 0 16px 14px 16px;
+  color: #333;
+  line-height: 1.55;
+  border-top: 1px solid #e6ebf2;
+  background: #fff;
+}
+
+/* ==== Hover zoom (cards da home) ==== */
+.card .thumb-zoom {
+  transition: transform .25s ease, box-shadow .25s ease;
+  will-change: transform;
+}
+.card:hover .thumb-zoom {
+  transform: scale(1.04);
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+}
+
+/* ==== Galeria / Lightbox na página do imóvel ==== */
+.gallery {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  margin-top: 12px;
+}
+.gallery .tile {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e6ebf2;
+  background: #fff;
+  cursor: zoom-in;
+}
+.gallery img, .gallery video {
+  width: 100%; height: 110px; object-fit: cover; display: block;
+}
+
+.tile .play-badge{
+  position:absolute; inset:auto 8px 8px auto;
+  background: rgba(0,0,0,.7); color:#fff; font-size:.8rem;
+  padding: 4px 8px; border-radius: 999px;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,.72);
+  display: none; /* toggled via JS */
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.lightbox.open { display: flex; }
+.lightbox-content {
+  position: relative; max-width: 92vw; max-height: 88vh;
+  background: #000; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,.5);
+}
+.lightbox img, .lightbox video {
+  display: block; max-width: 92vw; max-height: 88vh; width: auto; height: auto;
+}
+.lightbox .close-btn{
+  position:absolute; top:8px; right:8px;
+  background: rgba(255,255,255,.9); color:#111;
+  border:0; border-radius: 10px; padding: 8px 12px;
+  font-weight: 800; cursor: pointer;
+}

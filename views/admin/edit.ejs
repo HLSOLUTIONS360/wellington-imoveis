@@ -1,0 +1,9 @@
+<h2>Editar Imóvel</h2>
+<form method="post" action="/admin/editar/<%= property.id %>" enctype="multipart/form-data">
+  <label>Título</label><input type="text" name="title" value="<%= property.title %>">
+  <label>Descrição</label><textarea name="description" rows="5"><%= property.description %></textarea>
+  <label>Preço</label><input type="text" name="price" value="<%= property.price %>">
+  <label>Endereço</label><input type="text" name="address" value="<%= property.address %>">
+  <label>Novas fotos</label><input type="file" name="newImages" accept="image/*" multiple>
+  <br><br><button class="btn">Salvar alterações</button>
+</form>

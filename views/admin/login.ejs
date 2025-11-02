@@ -1,0 +1,7 @@
+<h2>Login do Corretor</h2>
+<form method="post" action="/admin/login">
+  <label>Usuário</label><input type="text" name="user" required>
+  <label>Senha</label><input type="text" name="pass" required>
+  <br><br><input class="btn" type="submit" value="Entrar">
+  <% if (error) { %><p style="color:#b00"><%= error %></p><% } %>
+</form>

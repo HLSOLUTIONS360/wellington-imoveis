@@ -1,0 +1,9 @@
+<h2>Novo Imóvel</h2>
+<form method="post" action="/admin/novo" enctype="multipart/form-data">
+  <label>Título*</label><input type="text" name="title" required>
+  <label>Descrição</label><textarea name="description" rows="5"></textarea>
+  <label>Preço</label><input type="text" name="price">
+  <label>Endereço</label><input type="text" name="address">
+  <label>Fotos</label><input type="file" name="images" accept="image/*" multiple>
+  <br><br><button class="btn">Salvar</button>
+</form>
